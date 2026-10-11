@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>HashrateMine</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f4f6ff;font-family:Arial,sans-serif}
+header{padding:22px;background:#111a30;border-bottom:1px solid #283754}
+.logo{font-size:26px;font-weight:800;color:#58e0b1}
+.logo span{color:white}
+header p,.muted{color:#a7b3cb;font-size:13px}
+main{max-width:850px;margin:auto;padding:18px}
+.card{background:#141e34;border:1px solid #283754;border-radius:16px;padding:20px;margin-bottom:15px}
+h2{font-size:18px;margin-top:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.amount{font-size:25px;font-weight:bold;margin:12px 0}
+.doge{color:#ffd45b}.pol{color:#b9a0ff}.green{color:#58e0b1}
+button{width:100%;padding:14px;border:0;border-radius:10px;background:#58e0b1;color:#071b18;font-weight:bold;font-size:15px;margin-top:10px}
+.secondary{background:#283754;color:white}
+button:disabled{opacity:.5}
+.notice{padding:13px;background:#211d34;border:1px solid #413765;border-radius:12px;color:#c7bbff;font-size:12px;line-height:1.6;margin-bottom:18px}
+.bar{height:8px;background:#293652;border-radius:8px;overflow:hidden;margin:14px 0}
+.bar div{height:100%;width:35%;background:#58e0b1}
+footer{text-align:center;color:#8190aa;font-size:12px;padding:25px}
+@media(max-width:420px){.grid{grid-template-columns:1fr}.amount{font-size:23px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Hashrate<span>Mine</span></div>
+  <p>VIRTUAL MINING DASHBOARD</p>
+</header>
+<main>
+  <div class="notice">
+    DEMO VERSION: balances and mining rewards are virtual.
+    No real cryptocurrency is mined or paid by this demo.
+  </div>
+
+  <section class="card">
+    <p class="muted">YOUR HASHRATE</p>
+    <div class="amount green" id="hash">100 H/s</div>
+    <p class="muted">Virtual mining simulation</p>
+    <div class="bar"><div></div></div>
+    <p class="muted">Status: <span class="green">DEMO ACTIVE</span></p>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2 class="doge">DOGE Balance</h2>
+      <div class="amount" id="doge">0.00000000</div>
+      <p class="muted">Virtual points</p>
+    </section>
+    <section class="card">
+      <h2 class="pol">POL Balance</h2>
+      <div class="amount" id="pol">0.00000000</div>
+      <p class="muted">Virtual points</p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>Daily bonus</h2>
+    <p class="muted">Claim your daily demo bonus.</p>
+    <button id="bonusBtn" onclick="bonus()">Claim daily bonus</button>
+    <p class="muted" id="bonusMsg"></p>
+  </section>
+
+  <section class="card">
+    <h2>Mining boost</h2>
+    <p class="muted">Try a temporary virtual hashrate boost.</p>
+    <button class="secondary" onclick="boost()">Activate 3-hour boost</button>
+    <p class="muted" id="boostMsg"></p>
+  </section>
+
+  <section class="card">
+    <h2>Daily task</h2>
+    <p class="muted">Complete this demo task to collect virtual points.</p>
+    <button class="secondary" id="taskBtn" onclick="task()">Complete task</button>
+    <p class="muted" id="taskMsg"></p>
+  </section>
+
+  <section class="card">
+    <h2>Withdrawals</h2>
+    <p class="muted">Real DOGE and POL withdrawals are not enabled yet. A secure payment system and real funds are required.</p>
+    <button disabled>Withdraw — coming later</button>
+  </section>
+</main>
+<footer>HashrateMine · Virtual mining demo</footer>
+
+<script>
+let doge=0,pol=0,boosted=false,bonusClaimed=false,taskDone=false;
+
+function showBalances(){
+ document.getElementById('doge').textContent=doge.toFixed(8);
+ document.getElementById('pol').textContent=pol.toFixed(8);
+}
+function bonus(){
+ if(bonusClaimed){
+  document.getElementById('bonusMsg').textContent='Bonus already claimed in this session.';
+  return;
+ }
+ bonusClaimed=true;
+ doge+=10;
+ showBalances();
+ document.getElementById('bonusBtn').disabled=true;
+ document.getElementById('bonusMsg').textContent='10 virtual demo points added.';
+}
+function boost(){
+ if(boosted){
+  document.getElementById('boostMsg').textContent='Boost already activated in this session.';
+  return;
+ }
+ boosted=true;
+ document.getElementById('hash').textContent='200 H/s';
+ document.getElementById('boostMsg').textContent='Demo boost activated. It resets when the page reloads.';
+}
+function task(){
+ if(taskDone){
+  document.getElementById('taskMsg').textContent='Task already completed in this session.';
+  return;
+ }
+ taskDone=true;
+ pol+=5;
+ showBalances();
+ document.getElementById('taskBtn').disabled=true;
+ document.getElementById('taskMsg').textContent='5 virtual demo points added.';
+}
+</script>
+</body>
+</html>
